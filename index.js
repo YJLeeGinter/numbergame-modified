@@ -4,40 +4,6 @@ var body = document.body;
 var numberExample;
 var numberArr;
 
-
-function colorNumber(num, coloredAnswer){
-    var ball = document.createElement('div');
-    ball.textContent = num;
-    ball.style.display = 'inline-block';
-    ball.style.border = '1px solid black';
-    ball.style.borderRadius = '10px';
-    ball.style.width = '20px';
-    ball.style.hiehgt = '20px';
-    ball.style.textAlign = 'center';
-    ball.style.backgroundColor = 'yellow';
-    ball.style.margin = '10px';        
-    ball.className = 'ballID' + num;
-    coloredAnswer.appendChild(ball);
-}
-
-function showAnswer(){
-
-    for(var i =0; i < 5 ; i++){
-        if(i<4){
-            function show(j){
-                setTimeout(function callBack(){
-                    colorNumber(numberArr[j], coloredAnswer);
-                }, 1000*j); // milli secs                 
-            }
-            show(i);
-        }else {
-            setTimeout(() => {pickNumber()}, 1000*i);
-             }        
-       
-    }          
-
-}
-
 function pickNumber(){
     numberExample = [1,2,3,4,5,6,7,8,9];
     numberArr = [];
@@ -89,10 +55,44 @@ form.addEventListener('submit', function callBack(event) { // a user hit the ent
         input.value = '';
         input.focus();
     }       
+
+    function colorNumber(num, coloredAnswer){
+        var ball = document.createElement('div');
+        ball.textContent = num;
+        ball.style.display = 'inline-block';
+        ball.style.border = '1px solid black';
+        ball.style.borderRadius = '10px';
+        ball.style.width = '20px';
+        ball.style.hiehgt = '20px';
+        ball.style.textAlign = 'center';
+        ball.style.backgroundColor = 'yellow';
+        ball.style.margin = '10px';        
+        ball.className = 'ballID' + num;
+        coloredAnswer.appendChild(ball);
+    }
+    
+    function showAnswer(){
+        var tempNum = [];
+
+        for(var i =0; i <4 ; i++){
+              function show(j){
+                tempNum[j] = numberArr[j];
+                setTimeout(()=>{
+                    colorNumber(tempNum[j], coloredAnswer);
+                }, 1000*j); // milli secs                 
+                }
+                show(i);
+              }  
+              
+           
+    
+    }
     
   if(answer === numberArr.join('')){ // when the answer is correct
     result.textContent = 'Home Run!';
     showAnswer();
+    console.log(numberArr);
+    pickNumber();
     console.log(numberArr);
     emptyInput();
     count = 0;
@@ -105,6 +105,7 @@ form.addEventListener('submit', function callBack(event) { // a user hit the ent
 
     if(count > 10){
         result.textContent = 'more than 10 times! The answer is :' + numberArr;
+        showAnswer();
         emptyInput();
         pickNumber();
         count = 0;
@@ -124,10 +125,11 @@ form.addEventListener('submit', function callBack(event) { // a user hit the ent
         result.textContent =  strike + ' strikes, ' + ball + ' balls';
         emptyInput();
         
-    }  
+    }
 
     
 }
+
 }); // callback function
     
 
