@@ -4,6 +4,40 @@ var body = document.body;
 var numberExample;
 var numberArr;
 
+
+function colorNumber(num, coloredAnswer){
+    var ball = document.createElement('div');
+    ball.textContent = num;
+    ball.style.display = 'inline-block';
+    ball.style.border = '1px solid black';
+    ball.style.borderRadius = '10px';
+    ball.style.width = '20px';
+    ball.style.hiehgt = '20px';
+    ball.style.textAlign = 'center';
+    ball.style.backgroundColor = 'yellow';
+    ball.style.margin = '10px';        
+    ball.className = 'ballID' + num;
+    coloredAnswer.appendChild(ball);
+}
+
+function showAnswer(){
+
+    for(var i =0; i < 5 ; i++){
+        if(i<4){
+            function show(j){
+                setTimeout(function callBack(){
+                    colorNumber(numberArr[j], coloredAnswer);
+                }, 1000*j); // milli secs                 
+            }
+            show(i);
+        }else {
+            setTimeout(() => {pickNumber()}, 1000*i);
+             }        
+       
+    }          
+
+}
+
 function pickNumber(){
     numberExample = [1,2,3,4,5,6,7,8,9];
     numberArr = [];
@@ -54,50 +88,11 @@ form.addEventListener('submit', function callBack(event) { // a user hit the ent
     function emptyInput(){
         input.value = '';
         input.focus();
-    }   
-
-
-    function colorBall(num, coloredAnswer){
-        var ball = document.createElement('div');
-        ball.textContent = num;
-        ball.style.display = 'inline-block';
-        ball.style.border = '1px solid black';
-        ball.style.borderRadius = '10px';
-        ball.style.width = '20px';
-        ball.style.hiehgt = '20px';
-        ball.style.textAlign = 'center';
-        ball.style.backgroundColor = 'yellow';
-        ball.style.margin = '10px';        
-        ball.className = 'ballID' + num;
-        coloredAnswer.appendChild(ball);
-    }
-    
-    console.log(numberArr);
-    setTimeout(function callBack(){
-        colorBall(numberArr[0], coloredAnswer);
-    }, 1000) // milli secs
-    
-    console.log(numberArr);
-    setTimeout(function callBack(){
-        colorBall(numberArr[1], coloredAnswer);
-    }, 2000) // milli secs    
-
-    console.log(numberArr);
-    setTimeout(function callBack(){
-       colorBall(numberArr[2], coloredAnswer);
-    }, 3000) // milli secs
-
-
-        console.log(numberArr);
-    setTimeout(function callBack(){
-        colorBall(numberArr[3], coloredAnswer);
-    }, 4000) // milli secs
-
+    }       
     
   if(answer === numberArr.join('')){ // when the answer is correct
     result.textContent = 'Home Run!';
-    console.log(numberArr); 
-    pickNumber();
+    showAnswer();
     console.log(numberArr);
     emptyInput();
     count = 0;
