@@ -26,6 +26,7 @@ result.classList.add('align');
 body.append(result);
 
 var coloredAnswer = document.createElement('div');
+coloredAnswer.setAttribute('id', 'color');
 coloredAnswer.classList.add('align');
 body.append(coloredAnswer);
 
@@ -47,10 +48,19 @@ form.append(button);
 var count = 0; // 틀린 횟수
 
 form.addEventListener('submit', function callBack(event) { // a user hit the enter
-    event.preventDefault();   
+    event.preventDefault();  
+    removeBall();
+
+    function removeBall(){
+        var coloredBall = document.getElementById("color");
+        while (coloredBall.firstChild) {
+        coloredBall.removeChild(coloredBall.firstChild);
+    }
+                 
+    }    
 
     var answer = input.value;
-
+    
     function emptyInput(){
         input.value = '';
         input.focus();
@@ -82,10 +92,7 @@ form.addEventListener('submit', function callBack(event) { // a user hit the ent
                 }, 1000*j); // milli secs                 
                 }
                 show(i);
-              }  
-              
-           
-    
+              }   
     }
     
   if(answer === numberArr.join('')){ // when the answer is correct
@@ -121,7 +128,7 @@ form.addEventListener('submit', function callBack(event) { // a user hit the ent
                 ball = ball + 1;
             }      
         }
-        countShow.textContent = 'the number of try : '+ count ;
+        countShow.textContent = 'You tried : '+ count + ' times!' ;
         result.textContent =  strike + ' strikes, ' + ball + ' balls';
         emptyInput();
         
